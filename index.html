@@ -118,7 +118,9 @@
           }
           year
           city
-          mainPhoto
+          photo {
+            url(width: 348, height:348)
+          }
         }
       }
     }`;
@@ -134,7 +136,7 @@
         },
         "body":JSON.stringify({
           "query": query,
-          "variables": {location: document.getElementById('location').value}
+          "variables": {"location": document.getElementById('location').value}
         }),
         "method":"POST"
       }
@@ -144,7 +146,7 @@
         data.data.searchCars.cars.forEach((car)=>{
           $('#car-list').append(`<div class="col-lg-4 col-sm-6 portfolio-item">
             <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="${car.mainPhoto}" alt=""></a>
+                <a href="#"><img class="card-img-top" src="${car.photo ? car.photo.url : 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/No_image_available_500_x_500.svg/1000px-No_image_available_500_x_500.svg.png'}" alt=""></a>
                 <div class="card-body">
                     <h4 class="card-title">
                         <a href="#">#${car.id} - ${car.brand.label} ${car.model.label}</a>
