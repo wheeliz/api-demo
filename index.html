@@ -165,13 +165,18 @@
     }`;
 
   $('#submit').on('click', function() {
+    var token = document.getElementById('token').value;
+    if(!token) {
+      alert('You must give a token for this example to work. Please note that the token is used on front-end in this example, but in reality you should keep it on backend');
+      return;
+    }
     $('#car-list').html('');
     $('#loading').addClass("loading");
     fetch(
       "https://api.wheeliz.com/fr/graphql/",
       {
         "headers":{
-          "Authorization":"Bearer "+document.getElementById('token').value,
+          "Authorization":"Bearer "+token,
           "Content-Type": "application/json"
         },
         "body":JSON.stringify({
