@@ -68,6 +68,10 @@
                 transform: rotate(360deg);
             }
         }
+        #script-code {
+            display: none;
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 
@@ -117,6 +121,11 @@
     <!-- /.row -->
 
 </div>
+
+<div class="container">
+    <button class="btn btn-secondary" id="view-code-btn">View Js code</button>
+    <code lang="javascript" id="script-code"></code>
+</div>
 <!-- /.container -->
 
 <!-- Footer -->
@@ -132,7 +141,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-<script>
+<script id="script">
   const query = `query searchCars($location: String!) {
       searchCars(location: $location) {
         cars {
@@ -193,6 +202,13 @@
         console.log('Fetch Error :-S', err);
       });
   });
+</script>
+
+<script>
+    $('#script-code').html($("#script").html().replace(/</g,'&lt;'));
+    $('#view-code-btn').on('click', function() {
+      $('#script-code').toggle();
+    })
 </script>
 
 </body>
