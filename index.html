@@ -38,6 +38,31 @@
         .pagination {
             margin-bottom: 30px;
         }
+
+        .loading {
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+        .loading:after {
+            content: " ";
+            display: block;
+            width: 32px;
+            height: 32px;
+            margin: -3px 9px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            border-color: #fff transparent #fff transparent;
+            animation: dual-ring 1.2s linear infinite;
+        }
+        @keyframes dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -78,7 +103,7 @@
     <!-- Page Heading -->
     <h1 class="my-4">Liste des voitures disponibles à <form onsubmit="return false;" class="form-inline">
         <input type="text" class="form-control" id="location" placeholder="Ville">
-        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+        <button type="submit" class="btn btn-primary" id="submit">Submit <div id="loading"></div></button>
     </form>
 
     </h1>
@@ -127,6 +152,7 @@
 
   $('#submit').on('click', function() {
     $('#car-list').html('');
+    $('#loading').addClass("loading");
     fetch(
       "https://api.wheeliz.com/fr/graphql/",
       {
@@ -143,6 +169,7 @@
     )
       .then(res => res.json())
       .then((data) => {
+        $('#loading').removeClass("loading");
         data.data.searchCars.cars.forEach((car)=>{
           $('#car-list').append(`<div class="col-lg-4 col-sm-6 portfolio-item">
             <div class="card h-100">
